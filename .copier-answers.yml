@@ -1,0 +1,12 @@
+# Changes here will be overwritten by Copier
+_commit: v0.18.1
+_src_path: gh:sarthakjariwala/django-vite-inertia
+allauth: false
+database: sqlite
+docker_dev: false
+docker_prod: false
+frontend: react
+project_name: k9club
+starter_kit: false
+tailwind_css: true
+
