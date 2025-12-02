@@ -3,11 +3,11 @@ import { Link } from "@inertiajs/react";
 
 const Layout = ({ children }: React.PropsWithChildren) => (
 	<>
-		<div>
+		<div className="min-h-screen bg-gray-100 p-8 dark:bg-gray-900">
 			<nav className="flex items-start justify-center">
 				<ul className="flex space-x-4">
 					<li>
-						<Link href="/">Home</Link>
+						<Link href="/" className="dark: text-white">Home</Link>
 					</li>
 				</ul>
 			</nav>
