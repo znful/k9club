@@ -1,5 +1,3 @@
-
-
 export default function Index() {
   return (
     <>
@@ -8,7 +6,7 @@ export default function Index() {
         <p className="text-lg font-mono">
           Find it in 'frontend/js/pages/Index.jsx'
         </p>
-        
+
       </div>
     </>
   );
