@@ -10,7 +10,7 @@ const Layout = ({ children }) => (
 					</li>
 				</ul>
 			</nav>
-			<div className="flex items-center justify-center mt-32">{children}</div>
+			<div className="flex items-center justify-center mt-32">{{ ...children }}</div>
 		</div>
 	</>
 );
