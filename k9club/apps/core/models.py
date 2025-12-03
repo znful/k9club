@@ -35,10 +35,14 @@ class Role(BaseModelMixin):
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField(blank=True)
     permissions = models.ManyToManyField(Permission, related_name="roles")
+    club = models.ForeignKey(Club, on_delete=models.CASCADE, related_name="roles")
 
     @override
     def __str__(self) -> str:
         return str(self.name)
+
+    class Meta:
+        unique_together = ("name", "club")
 
 
 class ClubUser(BaseModelMixin):
