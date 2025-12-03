@@ -28,40 +28,36 @@ ROLE_PERMISSIONS_CONFIG = {
 
 
 @receiver(post_save, sender=Club)
-def initialize_new_club(sender, instance, created, **kwargs):
+def initialize_new_club(sender: Club, instance: Club, created: bool, **kwargs) -> None:
     """
     1. Creates/gets default Roles and assigns their permissions.
-    2. Assigns the 'Owner' Role to the Club's creator.
+    2. Assigns the 'Owner' Role to the Club's owner.
     """
     if created:
-        creator: user_model = instance.owner  # <-- Using the new ForeignKey field
+        club_owner = instance.owner
 
-        # --- A. Create/Get and Assign Permissions to the Roles ---
         owner_role = None
 
         for role_name, config in ROLE_PERMISSIONS_CONFIG.items():
 
-            # 1. Get or Create the Role
             role, _ = Role.objects.get_or_create(
                 name=role_name,
+                club=instance,
                 defaults={"description": f"Default system role: {role_name}"},
             )
 
             if role_name == "Owner":
-                owner_role = role  # Cache the owner role for step B
+                owner_role = role
 
-            # 2. Collect Permissions
             permissions_to_assign = []
             model_list = config["models"]
             codenames = config["codenames"]
 
             if model_list and codenames:
-                # Get ContentType IDs for the models
                 content_type_ids = [
                     ContentType.objects.get_for_model(model).id for model in model_list
                 ]
 
-                # Filter for permissions matching the ContentTypes and codenames
                 permissions_to_assign = Permission.objects.filter(
                     content_type__in=content_type_ids,
                     codename__in=[
@@ -71,11 +67,8 @@ def initialize_new_club(sender, instance, created, **kwargs):
                     ],
                 )
 
-            # 3. Assign Permissions to the Role
             if permissions_to_assign:
                 role.permissions.set(permissions_to_assign)
 
-        # --- B. Assign 'Owner' Role to the Club Creator ---
-        # This part ensures the creator is the first member and has the Owner role.
-        if creator and owner_role:
-            ClubUser.objects.create(user=creator, club=instance, role=owner_role)
+        if club_owner and owner_role:
+            ClubUser.objects.create(user=club_owner, club=instance, role=owner_role)
