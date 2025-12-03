@@ -1,3 +1,4 @@
+import secrets
 from typing import override
 
 from django.contrib.auth import get_user_model
@@ -20,7 +21,7 @@ class BaseModelMixin(models.Model):
 
 class Club(BaseModelMixin):
     name = models.CharField(max_length=255)
-    slug = models.SlugField(unique=True)
+    slug = models.SlugField(unique=True, default=lambda: secrets.token_hex(8))
     description = models.TextField(blank=True)
     owner = models.ForeignKey(
         user_model, on_delete=models.CASCADE, related_name="owned_clubs"
