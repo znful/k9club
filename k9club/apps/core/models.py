@@ -40,8 +40,8 @@ class Role(BaseModelMixin):
 
 class ClubUser(BaseModelMixin):
     user = models.ForeignKey(user_model, on_delete=models.CASCADE, related_name="clubs")
-    club = models.ForeignKey(Club, on_delete=models.SET_NULL, related_name="members")
-    role = models.ForeignKey(Role, on_delete=models.SET_NULL)
+    club = models.ForeignKey(Club, on_delete=models.CASCADE, related_name="members")
+    role = models.ForeignKey(Role, on_delete=models.CASCADE)
     permissions = models.ManyToManyField(
         Permission, related_name="club_users", blank=True
     )
