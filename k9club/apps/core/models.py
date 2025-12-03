@@ -22,6 +22,9 @@ class Club(BaseModelMixin):
     name = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
     description = models.TextField(blank=True)
+    owner = models.ForeignKey(
+        user_model, on_delete=models.CASCADE, related_name="owned_clubs"
+    )
 
     @override
     def __str__(self) -> str:
