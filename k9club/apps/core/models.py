@@ -5,6 +5,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Permission
 from django.db import models
 
+from k9club.utils.slugs import generate_slug
+
 user_model = get_user_model()
 
 
@@ -21,10 +23,13 @@ class BaseModelMixin(models.Model):
 
 class Club(BaseModelMixin):
     name = models.CharField(max_length=255)
-    slug = models.SlugField(unique=True, default=lambda: secrets.token_hex(8))
+    slug = models.SlugField(unique=True, default=generate_slug)
     description = models.TextField(blank=True)
     owner = models.ForeignKey(
         user_model, on_delete=models.CASCADE, related_name="owned_clubs"
+    )
+    members = models.ManyToManyField(
+        to=user_model, through="ClubUser", related_name="clubs"
     )
 
     @override
@@ -47,8 +52,10 @@ class Role(BaseModelMixin):
 
 
 class ClubUser(BaseModelMixin):
-    user = models.ForeignKey(user_model, on_delete=models.CASCADE, related_name="clubs")
-    club = models.ForeignKey(Club, on_delete=models.CASCADE, related_name="members")
+    user = models.ForeignKey(
+        user_model, on_delete=models.CASCADE, related_name="club_users"
+    )
+    club = models.ForeignKey(Club, on_delete=models.CASCADE, related_name="club_users")
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
     permissions = models.ManyToManyField(
         Permission, related_name="club_users", blank=True
