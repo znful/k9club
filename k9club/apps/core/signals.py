@@ -6,18 +6,18 @@ from django.contrib.contenttypes.models import ContentType
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from .models import Adherent, Club, ClubUser, Document, Dog, Role
+from .models import Adherent, Club, ClubUser, Document, Dog, Invitation, Role
 
 user_model = get_user_model()
 
 # Map roles to the list of models they need permissions on.
 ROLE_PERMISSIONS_CONFIG = {
     "Owner": {
-        "models": [Club, Role, ClubUser, Adherent, Dog, Document],
+        "models": [Club, Role, ClubUser, Adherent, Dog, Document, Invitation],
         "codenames": ["add", "change", "delete", "view"],
     },
     "Admin": {
-        "models": [Adherent, Dog, Document],
+        "models": [Adherent, Dog, Document, Invitation],
         "codenames": ["add", "change", "view"],
     },
     "Member": {
