@@ -1,4 +1,3 @@
-import secrets
 from typing import override
 
 from django.contrib.auth import get_user_model
