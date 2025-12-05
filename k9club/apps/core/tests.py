@@ -49,4 +49,16 @@ class ClubModelTest(TestCase):
 
         self.assertEqual(user, club.owner)
 
-    def test_club_owner_has_clubuser_owner_role(self) -> None: ...
+    def test_can_get_clubs_from_user(self) -> None:
+        user = user_model.objects.first()
+        club = Club.objects.create(name="club", owner=user)
+
+        self.assertEqual(user.owned_clubs.first(), club)
+
+    def test_club_owner_has_clubuser_owner_role(self) -> None:
+        user = user_model.objects.first()
+        club = Club.objects.create(name="club", owner=user)
+
+        club_user = ClubUser.objects.get(club=club, user=user)
+
+        self.assertEqual(club_user.role.name, "Owner")
