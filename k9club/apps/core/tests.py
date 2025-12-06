@@ -3,7 +3,7 @@ from typing import override
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
-from k9club.apps.core.models import Adherent, Club, ClubUser
+from k9club.apps.core.models import Adherent, Club, ClubUser, Dog
 
 user_model = get_user_model()
 
@@ -90,3 +90,23 @@ class AdherentModelTest(TestCase):
         self.assertIsInstance(adherent.club, Club)
         self.assertEqual(adherent.club, club)
         self.assertEqual(club.adherents.get(pk=adherent.pk), adherent)
+
+
+class DogModelTest(TestCase):
+
+    @override
+    def setUp(self) -> None:
+        user = user_model.objects.create(
+            username="username", email="test@test.com", password="password"
+        )
+        club = Club.objects.create(name="club", owner=user)
+        adherent = Adherent.objects.create(
+            first_name="first", last_name="last", email="email@test.com", club=club
+        )
+
+    def test_can_create_dog(self):
+        adherent = Adherent.objects.first()
+
+        dog = Dog.objects.create(name="dog", owner=adherent)
+        self.assertIsInstance(dog, Dog)
+        self.assertEqual(dog, adherent.dogs.get(pk=dog.pk))
