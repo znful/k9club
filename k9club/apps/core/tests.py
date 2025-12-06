@@ -3,7 +3,7 @@ from typing import override
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
-from k9club.apps.core.models import Adherent, Club, ClubUser, Dog
+from k9club.apps.core.models import Adherent, Club, ClubUser, Dog, Invitation
 
 user_model = get_user_model()
 
@@ -64,7 +64,7 @@ class ClubModelTest(TestCase):
         self.assertEqual(club_user.role.name, "Owner")
 
 
-class AdherentModelTest(TestCase):
+class AdherentModelTests(TestCase):
 
     @override
     def setUp(self) -> None:
@@ -92,7 +92,7 @@ class AdherentModelTest(TestCase):
         self.assertEqual(club.adherents.get(pk=adherent.pk), adherent)
 
 
-class DogModelTest(TestCase):
+class DogModelTests(TestCase):
 
     @override
     def setUp(self) -> None:
@@ -110,3 +110,24 @@ class DogModelTest(TestCase):
         dog = Dog.objects.create(name="dog", owner=adherent)
         self.assertIsInstance(dog, Dog)
         self.assertEqual(dog, adherent.dogs.get(pk=dog.pk))
+
+
+class InvitationModelTests(TestCase):
+
+    @override
+    def setUp(self) -> None:
+        user = user_model.objects.create(
+            username="username", email="test@test.com", password="password"
+        )
+        _ = Club.objects.create(name="club", owner=user)
+
+    def test_can_create_invitation(self):
+        user = user_model.objects.first()
+        club = Club.objects.first()
+
+        invitation = Invitation.objects.create(
+            email="inv@test.com", club=club, invited_by=user
+        )
+
+        self.assertIsInstance(invitation, Invitation)
+        self.assertEqual(user.sent_invitations.get(pk=invitation.pk), invitation)
