@@ -3,7 +3,7 @@ from typing import override
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 
-from k9club.apps.core.models import Club, ClubUser
+from k9club.apps.core.models import Adherent, Club, ClubUser
 
 user_model = get_user_model()
 
@@ -62,3 +62,31 @@ class ClubModelTest(TestCase):
         club_user = ClubUser.objects.get(club=club, user=user)
 
         self.assertEqual(club_user.role.name, "Owner")
+
+
+class AdherentModelTest(TestCase):
+
+    @override
+    def setUp(self) -> None:
+        user = user_model.objects.create(
+            username="username", email="test@test.com", password="password"
+        )
+        Club.objects.create(name="club", owner=user)
+
+    def test_can_create_adherent(self) -> None:
+        club = Club.objects.first()
+        adherent = Adherent.objects.create(
+            first_name="first", last_name="last", email="email@test.com", club=club
+        )
+
+        self.assertIsInstance(adherent, Adherent)
+
+    def test_can_access_adherent_from_club(self):
+        club = Club.objects.first()
+        adherent = Adherent.objects.create(
+            first_name="first", last_name="last", email="email@test.com", club=club
+        )
+
+        self.assertIsInstance(adherent.club, Club)
+        self.assertEqual(adherent.club, club)
+        self.assertEqual(club.adherents.get(pk=adherent.pk), adherent)
