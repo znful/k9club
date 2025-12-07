@@ -4,7 +4,7 @@ import axios from "axios";
 import React from 'react';
 import { createRoot } from "react-dom/client";
 import { createInertiaApp } from '@inertiajs/react';
-import Layout from './components/Layout';
+import Layout from "./layouts/app-layout";
 
 
 import "../css/main.css";
