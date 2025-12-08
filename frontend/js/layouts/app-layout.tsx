@@ -1,26 +1,28 @@
 import React from 'react';
-import { AppShell } from '@/components/app-shell';
-import { AppSidebar } from '@/components/app-sidebar';
-import { AppSidebarHeader } from '@/components/app-sidebar-header';
 import { type BreadcrumbItem } from '@/types';
 import { type PropsWithChildren } from 'react';
-import { SidebarInset } from '@/components/ui/sidebar';
+import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { AppSidebar } from '@/components/app-sidebar';
 
-export function Layout({
+export default function Layout({
 	children,
-	breadcrumbs = [],
+	breadcrumbs = [
+		{
+			title: "Home",
+			href: "/"
+		}
+	],
 }: PropsWithChildren<{ breadcrumbs?: BreadcrumbItem[] }>) {
 	return (
-		<AppShell>
+		<SidebarProvider>
 			<AppSidebar />
-			<SidebarInset className="overflow-x-hidden">
-				<div className='ml-36'>
-					<AppSidebarHeader breadcrumbs={breadcrumbs} />
+			<SidebarInset className='ps-4 pt-4'>
+				<SidebarTrigger />
+				<main>
 					{children}
-				</div>
+				</main>
 			</SidebarInset>
-		</AppShell>
+		</SidebarProvider>
 	);
 }
 
-export default (page) => <Layout>{page}</Layout>

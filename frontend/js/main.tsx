@@ -4,7 +4,6 @@ import axios from "axios";
 import React from 'react';
 import { createRoot } from "react-dom/client";
 import { createInertiaApp } from '@inertiajs/react';
-import Layout from "./layouts/app-layout";
 
 
 import "../css/main.css";
@@ -20,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	createInertiaApp({
 		resolve: async name => {
 			const page = (await pages[`./pages/${name}.tsx`]()).default;
-			page.layout = page.layout || Layout
 			return page
 		},
 		setup({ el, App, props }) {
