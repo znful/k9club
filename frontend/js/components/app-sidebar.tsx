@@ -46,15 +46,15 @@ const items: NavItem[] = [
 export function AppSidebar() {
 	return (
 		<Sidebar collapsible="icon" variant="inset" className="sticky">
-			<SidebarContent>
+			<SidebarContent className="">
 				<SidebarGroup>
 					<SidebarGroupLabel>Application</SidebarGroupLabel>
 					<SidebarGroupContent>
 						<SidebarMenu>
 							{items.map((item) => (
 								<SidebarMenuItem key={item.title}>
-									<SidebarMenuButton asChild>
-										<Link href={item.href}>
+									<SidebarMenuButton size="lg" asChild>
+										<Link href={item.href} prefetch>
 											<item.icon />
 											<span>{item.title}</span>
 										</Link>

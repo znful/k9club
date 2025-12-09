@@ -3,6 +3,7 @@ import { type BreadcrumbItem } from '@/types';
 import { type PropsWithChildren } from 'react';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/app-sidebar';
+import { AppSidebarHeader } from '@/components/app-sidebar-header';
 
 export default function Layout({
 	children,
@@ -16,9 +17,9 @@ export default function Layout({
 	return (
 		<SidebarProvider>
 			<AppSidebar />
-			<SidebarInset className='ps-4 pt-4'>
-				<SidebarTrigger />
-				<main>
+			<SidebarInset>
+				<AppSidebarHeader />
+				<main className='md:px-4'>
 					{children}
 				</main>
 			</SidebarInset>
