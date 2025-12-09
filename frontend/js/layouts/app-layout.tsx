@@ -18,7 +18,7 @@ export default function Layout({
 		<SidebarProvider>
 			<AppSidebar />
 			<SidebarInset>
-				<AppSidebarHeader />
+				<AppSidebarHeader breadcrumbs={breadcrumbs} />
 				<main className='md:px-4'>
 					{children}
 				</main>
