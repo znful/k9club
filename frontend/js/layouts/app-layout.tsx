@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { type ReactNode } from 'react';
 import { type BreadcrumbItem } from '@/types';
 import { type PropsWithChildren } from 'react';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
@@ -14,14 +14,15 @@ export default function Layout({
 			href: "/"
 		}
 	],
-}: PropsWithChildren<{ breadcrumbs?: BreadcrumbItem[] }>) {
+	actions = undefined
+}: PropsWithChildren<{ breadcrumbs?: BreadcrumbItem[], actions?: ReactNode }>) {
 	return (
 		<ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
 			<SidebarProvider>
 				<AppSidebar />
 				<SidebarInset>
-					<AppSidebarHeader breadcrumbs={breadcrumbs} />
-					<main className='md:px-4'>
+					<AppSidebarHeader breadcrumbs={breadcrumbs} actions={actions} />
+					<main className='md:px-4 pt-2'>
 						{children}
 					</main>
 				</SidebarInset>
