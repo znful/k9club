@@ -4,6 +4,7 @@ import { type PropsWithChildren } from 'react';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/app-sidebar';
 import { AppSidebarHeader } from '@/components/app-sidebar-header';
+import { ThemeProvider } from '@/components/theme-provider';
 
 export default function Layout({
 	children,
@@ -15,15 +16,17 @@ export default function Layout({
 	],
 }: PropsWithChildren<{ breadcrumbs?: BreadcrumbItem[] }>) {
 	return (
-		<SidebarProvider>
-			<AppSidebar />
-			<SidebarInset>
-				<AppSidebarHeader breadcrumbs={breadcrumbs} />
-				<main className='md:px-4'>
-					{children}
-				</main>
-			</SidebarInset>
-		</SidebarProvider>
+		<ThemeProvider defaultTheme='dark' storageKey='vite-ui-theme'>
+			<SidebarProvider>
+				<AppSidebar />
+				<SidebarInset>
+					<AppSidebarHeader breadcrumbs={breadcrumbs} />
+					<main className='md:px-4'>
+						{children}
+					</main>
+				</SidebarInset>
+			</SidebarProvider>
+		</ThemeProvider>
 	);
 }
 
