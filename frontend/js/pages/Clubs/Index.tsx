@@ -26,7 +26,7 @@ export default function Index({ clubs }: Props) {
         <Button variant='default' size='sm'>Back Home </Button>
       </Link>
     </>)}>
-      <div className="d-flex gap-4">
+      <div className="flex gap-4 justify-center flex-wrap sm:flex-row lg:justify-start">
         {clubs != undefined && clubs.map((club) => (
           <ClubCard club={club} key={club.id} />
         ))}
