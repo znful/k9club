@@ -1,5 +1,5 @@
 import React from "react"
-import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
+import { Home, Warehouse } from "lucide-react"
 
 import {
 	Sidebar,
@@ -18,29 +18,14 @@ import type { NavItem } from "@/types"
 const items: NavItem[] = [
 	{
 		title: "Home",
-		href: "#",
+		href: "/",
 		icon: Home,
 	},
 	{
-		title: "Inbox",
-		href: "#",
-		icon: Inbox,
-	},
-	{
-		title: "Calendar",
-		href: "#",
-		icon: Calendar,
-	},
-	{
-		title: "Search",
-		href: "#",
-		icon: Search,
-	},
-	{
-		title: "Settings",
-		href: "#",
-		icon: Settings,
-	},
+		title: "Clubs",
+		href: "/clubs",
+		icon: Warehouse
+	}
 ]
 
 export function AppSidebar() {
