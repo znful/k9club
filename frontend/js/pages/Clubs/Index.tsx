@@ -3,6 +3,7 @@ import Layout from '@/layouts/app-layout';
 import type { BreadcrumbItem, Club } from '@/types';
 import { Button } from '@/components/ui/button';
 import { Link } from '@inertiajs/react';
+import { ClubCard } from '@/components/club-card';
 
 interface Props {
   clubs?: Partial<Club>[]
@@ -25,9 +26,9 @@ export default function Index({ clubs }: Props) {
         <Button variant='default' size='sm'>Back Home </Button>
       </Link>
     </>)}>
-      <div className="">
+      <div className="d-flex gap-4">
         {clubs != undefined && clubs.map((club) => (
-          <h1 key={club.id}>{club.name}</h1>
+          <ClubCard club={club} key={club.id} />
         ))}
       </div>
     </Layout>
