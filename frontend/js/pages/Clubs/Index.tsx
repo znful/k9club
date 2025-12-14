@@ -23,7 +23,7 @@ export default function Index({ clubs }: Props) {
   return (
     <Layout breadcrumbs={breadcrumbs} actions={(<>
       <Link href="/" title='Back Home'>
-        <Button variant='default' size='sm'>Back Home </Button>
+        <Button variant='default' size='sm'>Create Club</Button>
       </Link>
     </>)}>
       <div className="flex gap-4 justify-center flex-wrap sm:flex-row lg:justify-start">
