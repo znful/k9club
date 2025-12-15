@@ -17,7 +17,7 @@ export function ClubCard({ club }: { club: Partial<Club> }) {
 				<CardFooter>
 					<Link title={`Show ${club.name}`} href={`/clubs/${club.slug}`} prefetch>
 						<Button variant="light">
-							Edit
+							Manage
 						</Button>
 					</Link>
 				</CardFooter>

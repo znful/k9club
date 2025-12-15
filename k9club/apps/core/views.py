@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
 from django.http import HttpRequest
-from django.shortcuts import redirect
+from django.shortcuts import get_object_or_404, redirect
 from django.views.decorators.http import require_GET, require_POST
 from inertia import render
 
@@ -21,6 +21,7 @@ def club_index(request: HttpRequest):
     return render(request=request, component="Clubs/Index", props={"clubs": clubs})
 
 
+@login_required
 @require_POST
 def club_create(request: HttpRequest):
     form = ClubForm(json.loads(request.body))
@@ -31,3 +32,10 @@ def club_create(request: HttpRequest):
     club.save()
     messages.success(request, "Successfully created club")
     return redirect("clubs:index")
+
+
+@login_required
+@require_GET
+def club_show(request: HttpRequest, slug: str):
+    club = get_object_or_404(Club, slug=slug)
+    return render(request=request, component="Clubs/Detail", props={"club": club})
