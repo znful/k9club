@@ -10,6 +10,7 @@ from inertia import render
 
 from k9club.apps.core.forms import ClubForm
 from k9club.apps.core.models import Club
+from k9club.utils.inertia_helpers import continue_or_redirect_with_errors
 
 
 @login_required
@@ -23,12 +24,10 @@ def club_index(request: HttpRequest):
 @require_POST
 def club_create(request: HttpRequest):
     form = ClubForm(json.loads(request.body))
+    _ = continue_or_redirect_with_errors(form, redirect("clubs:index"))
 
-    if form.is_valid():
-        club: Club = form.save(commit=False)
-        club.owner = request.user
-        club.save()
-        messages.success(request, "Successfully created club")
-        return redirect("clubs:index")
-
+    club: Club = form.save(commit=False)
+    club.owner = request.user
+    club.save()
+    messages.success(request, "Successfully created club")
     return redirect("clubs:index")

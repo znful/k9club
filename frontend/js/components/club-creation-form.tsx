@@ -15,7 +15,8 @@ import { Label } from "@/components/ui/label"
 import { Form } from "@inertiajs/react"
 import { Plus } from "lucide-react"
 
-export function ClubCreationForm() {
+export function ClubCreationForm({ errors }: { errors?: Record<string, string> }) {
+	console.log(errors)
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger asChild>
@@ -35,7 +36,12 @@ export function ClubCreationForm() {
 					<div>
 						<div className="grid gap-3">
 							<Label htmlFor="name">Name</Label>
-							<Input id="name" name="name" placeholder="Paul's canine club" />
+							<div className="mb-4">
+								<Input id="name" name="name" placeholder="Paul's canine club" className={errors && errors.name ? "border-red-500" : ""} />
+								{errors && errors.name && (
+									<p className="text-red-500 text-sm mt-1">{errors.name}</p>
+								)}
+							</div>
 						</div>
 						<div className="grid gap-3">
 							<Label htmlFor="description">Description</Label>

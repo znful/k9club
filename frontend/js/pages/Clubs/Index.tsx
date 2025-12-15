@@ -6,9 +6,10 @@ import { ClubCreationForm } from '@/components/club-creation-form';
 
 interface Props {
   clubs?: Partial<Club>[]
+  errors?: Record<string, string>
 }
 
-export default function Index({ clubs }: Props) {
+export default function Index({ clubs, errors }: Props) {
   const breadcrumbs: BreadcrumbItem[] = [
     {
       title: "Home",
@@ -21,7 +22,7 @@ export default function Index({ clubs }: Props) {
   ]
   return (
     <Layout breadcrumbs={breadcrumbs} actions={(<>
-      <ClubCreationForm />
+      <ClubCreationForm errors={errors} />
     </>)}>
       <div className="flex gap-4 justify-center flex-wrap sm:flex-row lg:justify-start">
         {clubs != undefined && clubs.map((club) => (
