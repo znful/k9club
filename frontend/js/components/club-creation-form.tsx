@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
 	AlertDialog,
@@ -14,11 +14,18 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Form } from "@inertiajs/react"
 import { Plus } from "lucide-react"
+import { Textarea } from "@/components/ui/textarea"
 
 export function ClubCreationForm({ errors }: { errors?: Record<string, string> }) {
-	console.log(errors)
+	const [open, setOpen] = useState(false)
+
+	useEffect(() => {
+		if (errors == undefined && open == true) {
+			setOpen(false)
+		}
+	}, [errors])
 	return (
-		<AlertDialog>
+		<AlertDialog open={open} onOpenChange={setOpen}>
 			<AlertDialogTrigger asChild>
 				<Button variant="default">
 					<Plus />
@@ -45,7 +52,7 @@ export function ClubCreationForm({ errors }: { errors?: Record<string, string> }
 						</div>
 						<div className="grid gap-3">
 							<Label htmlFor="description">Description</Label>
-							<textarea id="description" name="description" placeholder="Describe your club using a few words..." />
+							<Textarea id="description" name="description" placeholder="Describe your club using a few words..." rows={5} />
 						</div>
 
 					</div>
