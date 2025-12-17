@@ -20,10 +20,14 @@ export function ClubCreationForm({ errors }: { errors?: Record<string, string> }
 	const [open, setOpen] = useState(false)
 
 	useEffect(() => {
+		handleDialogClose()
+	}, [errors])
+
+	const handleDialogClose = () => {
 		if (errors == undefined && open == true) {
 			setOpen(false)
 		}
-	}, [errors])
+	}
 	return (
 		<AlertDialog open={open} onOpenChange={setOpen}>
 			<AlertDialogTrigger asChild>
@@ -39,7 +43,7 @@ export function ClubCreationForm({ errors }: { errors?: Record<string, string> }
 						Create a new club here. Click save when you&apos;re done.
 					</AlertDialogDescription>
 				</AlertDialogHeader>
-				<Form action="/clubs/create/" method="POST" className="grid gap-4">
+				<Form action="/clubs/create/" method="POST" className="grid gap-4" onSuccess={handleDialogClose}>
 					<div>
 						<div className="grid gap-3">
 							<Label htmlFor="name">Name</Label>
