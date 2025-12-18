@@ -8,7 +8,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.views.decorators.http import require_GET, require_POST
 from inertia import render
 
-from k9club.apps.core.forms import ClubForm
+from k9club.apps.core.forms import ClubForm, ClubUpdateForm
 from k9club.apps.core.models import Club
 from k9club.utils.inertia_helpers import continue_or_redirect_with_errors
 
@@ -37,5 +37,17 @@ def club_create(request: HttpRequest):
 @login_required
 @require_GET
 def club_show(request: HttpRequest, slug: str):
-    club = get_object_or_404(Club, slug=slug)
+    club: Club = get_object_or_404(Club, slug=slug)
     return render(request=request, component="Clubs/Detail", props={"club": club})
+
+
+@login_required
+@require_POST
+def club_update(request: HttpRequest, slug):
+    club = get_object_or_404(Club, slug=slug)
+    form = ClubUpdateForm(json.loads(request.body), instance=club)
+    _ = continue_or_redirect_with_errors(form, redirect("clubs:show", slug=slug))
+
+    club = form.save()
+    messages.success(request, "Successfully updated club")
+    return redirect("clubs:show", slug=club.slug)

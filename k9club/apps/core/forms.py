@@ -7,3 +7,9 @@ class ClubForm(ModelForm):
     class Meta:
         model = Club
         fields = ["name", "description"]
+
+
+class ClubUpdateForm(ModelForm):
+    class Meta:
+        model = Club
+        fields = ["name", "description", "slug"]
