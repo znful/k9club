@@ -77,8 +77,8 @@ export default function Detail({ club, errors }: { club: Club, errors?: Record<s
             <div className="relative space-y-0.5 text-red-600 dark:text-red-100">
               <p className="font-medium">Warning</p><p className="text-sm">Please proceed with caution, this cannot be undone.</p>
             </div>
-            <Link href={`/clubs/${club.slug}/delete/`} method="delete">
-              <Button variant="destructive">Delete club</Button>
+            <Link href={`/clubs/${club.slug}/delete/`} method="delete" as={Button} variant="destructive">
+              Delete club
             </Link>
           </div>
         </div>
