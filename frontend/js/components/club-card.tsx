@@ -3,6 +3,7 @@ import type { Club } from "@/types";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "@inertiajs/react";
 import { Button } from "./ui/button";
+import { SECONDS } from "@/lib/utils";
 
 export function ClubCard({ club }: { club: Partial<Club> }) {
 	return (
@@ -15,7 +16,7 @@ export function ClubCard({ club }: { club: Partial<Club> }) {
 					<p>{club.description}</p>
 				</CardContent>
 				<CardFooter>
-					<Link title={`Show ${club.name}`} href={`/clubs/${club.slug}`} prefetch>
+					<Link title={`Show ${club.name}`} href={`/clubs/${club.slug}`} prefetch cacheFor={10 * SECONDS}>
 						<Button variant="light">
 							Manage
 						</Button>

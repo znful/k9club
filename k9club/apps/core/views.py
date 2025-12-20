@@ -57,7 +57,7 @@ def club_update(request: HttpRequest, slug: str):
 @login_required
 @require_http_methods(["DELETE"])
 def club_delete(request: HttpRequest, slug: str):
-    club = get_object_or_404(Club, slug=slug)
+    club = Club.objects.get(slug=slug, members=request.user)
     club.is_active = False
     club.deleted_at = datetime.now()
     club.save()
