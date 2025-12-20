@@ -1,14 +1,15 @@
 import React from 'react';
 import Layout from '@/layouts/app-layout';
 import type { BreadcrumbItem, Club } from '@/types';
-import { Button } from '@/components/ui/button';
-import { Link } from '@inertiajs/react';
+import { ClubCard } from '@/components/club-card';
+import { ClubCreationForm } from '@/components/club-creation-form';
 
 interface Props {
   clubs?: Partial<Club>[]
+  errors?: Record<string, string>
 }
 
-export default function Index({ clubs }: Props) {
+export default function Index({ clubs, errors }: Props) {
   const breadcrumbs: BreadcrumbItem[] = [
     {
       title: "Home",
@@ -21,13 +22,11 @@ export default function Index({ clubs }: Props) {
   ]
   return (
     <Layout breadcrumbs={breadcrumbs} actions={(<>
-      <Link href="/" title='Back Home'>
-        <Button variant='default' size='sm'>Back Home </Button>
-      </Link>
+      <ClubCreationForm errors={errors} />
     </>)}>
-      <div className="">
+      <div className="flex gap-4 justify-center flex-wrap sm:flex-row lg:justify-start">
         {clubs != undefined && clubs.map((club) => (
-          <h1 key={club.id}>{club.name}</h1>
+          <ClubCard club={club} key={club.id} />
         ))}
       </div>
     </Layout>

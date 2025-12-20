@@ -10,6 +10,7 @@ import {
 import { type BreadcrumbItem as BreadcrumbItemType } from '@/types';
 import { Link } from '@inertiajs/react';
 import { Fragment } from 'react';
+import { SECONDS } from '@/lib/utils';
 
 export function Breadcrumbs({
 	breadcrumbs,
@@ -32,7 +33,7 @@ export function Breadcrumbs({
 											</BreadcrumbPage>
 										) : (
 											<BreadcrumbLink asChild>
-												<Link href={item.href}>
+												<Link href={item.href} prefetch cacheFor={10 * SECONDS}>
 													{item.title}
 												</Link>
 											</BreadcrumbLink>
