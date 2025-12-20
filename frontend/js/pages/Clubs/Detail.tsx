@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
-import { Card } from "@/components/ui/card";
 
 export default function Detail({ club, errors }: { club: Club, errors?: Record<string, string> }) {
   const breadcrumbs: BreadcrumbItem[] = [
