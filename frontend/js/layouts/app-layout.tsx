@@ -1,7 +1,7 @@
 import React, { type ReactNode } from 'react';
 import { type BreadcrumbItem } from '@/types';
 import { type PropsWithChildren } from 'react';
-import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/app-sidebar';
 import { AppSidebarHeader } from '@/components/app-sidebar-header';
 import { ThemeProvider } from '@/components/theme-provider';

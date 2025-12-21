@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { Textarea } from "@/components/ui/textarea";
+import ClubLayout from "@/layouts/club-layout";
 
 export default function Detail({ club, errors }: { club: Club, errors?: Record<string, string> }) {
   const breadcrumbs: BreadcrumbItem[] = [
@@ -23,9 +24,15 @@ export default function Detail({ club, errors }: { club: Club, errors?: Record<s
       href: `/clubs/${club.slug}/`
     }
   ]
+  const sidebarItems = [
+    {
+      title: "General",
+      href: `/clubs/${club.slug}/`
+    }
+  ]
   return (
     <>
-      <Layout breadcrumbs={breadcrumbs}>
+      <ClubLayout breadcrumbs={breadcrumbs} sidebarNavItems={sidebarItems}>
         <div className="mt-4">
           <Form method="POST" action={`/clubs/${club.slug}/edit/`}>
             {({ processing }) => (
@@ -82,7 +89,7 @@ export default function Detail({ club, errors }: { club: Club, errors?: Record<s
             </Link>
           </div>
         </div>
-      </Layout>
+      </ClubLayout>
     </>
   )
 }
