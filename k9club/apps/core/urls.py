@@ -9,6 +9,7 @@ club_patterns = (
         path("<str:slug>/", views.club_show, name="show"),
         path("<str:slug>/edit/", views.club_update, name="edit"),
         path("<str:slug>/delete/", views.club_delete, name="delete"),
+        path("<str:slug>/invitations/", views.club_invitations, name="invitations"),
     ],
     "clubs",
 )

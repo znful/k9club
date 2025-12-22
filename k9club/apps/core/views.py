@@ -62,3 +62,16 @@ def club_delete(request: HttpRequest, slug: str):
     club.deleted_at = datetime.now()
     club.save()
     return redirect("clubs:index")
+
+
+@login_required
+@require_GET
+def club_invitations(request: HttpRequest, slug: str):
+    club = Club.objects.get(slug=slug, members=request.user)
+    invitations = club.invitations.all()
+
+    return render(
+        request=request,
+        component="Clubs/Invitations",
+        props={"club": club, "invitations": invitations},
+    )

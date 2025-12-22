@@ -1,5 +1,4 @@
 import React from "react";
-import Layout from "@/layouts/app-layout";
 import type { BreadcrumbItem, Club } from "@/types";
 import { Form, Link } from "@inertiajs/react";
 import { Label } from "@/components/ui/label";
@@ -24,15 +23,10 @@ export default function Detail({ club, errors }: { club: Club, errors?: Record<s
       href: `/clubs/${club.slug}/`
     }
   ]
-  const sidebarItems = [
-    {
-      title: "General",
-      href: `/clubs/${club.slug}/`
-    }
-  ]
+
   return (
     <>
-      <ClubLayout breadcrumbs={breadcrumbs} sidebarNavItems={sidebarItems}>
+      <ClubLayout breadcrumbs={breadcrumbs} club={club}>
         <div className="mt-4">
           <Form method="POST" action={`/clubs/${club.slug}/edit/`}>
             {({ processing }) => (
