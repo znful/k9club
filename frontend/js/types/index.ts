@@ -56,6 +56,7 @@ export interface Club extends BaseModel {
   description: string;
   owner: User;
   members: User[];
+  invitattions: Invitation[];
 }
 
 export interface ClubUser extends BaseModel {
@@ -63,4 +64,12 @@ export interface ClubUser extends BaseModel {
   club: Club;
   role: Role;
   permissions: Permission[];
+}
+
+export interface Invitation extends BaseModel {
+  email: string;
+  club: Club;
+  invited_by: User;
+  token: string;
+  accepted: boolean;
 }
