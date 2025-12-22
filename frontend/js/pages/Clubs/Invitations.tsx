@@ -2,6 +2,7 @@ import React from "react";
 import type { BreadcrumbItem, Club, Invitation } from "@/types";
 import ClubLayout from "@/layouts/club-layout";
 import InvitationsTable from "@/components/invitations-table";
+import { InvitationCreationForm } from "@/components/invite-creation-form";
 
 export default function Invitations({ invitations, club, errors }: { invitations: Invitation[], club: Club, errors?: Record<string, string> }) {
   const breadcrumbs: BreadcrumbItem[] = [
@@ -25,7 +26,9 @@ export default function Invitations({ invitations, club, errors }: { invitations
 
   return (
     <>
-      <ClubLayout breadcrumbs={breadcrumbs} club={club}>
+      <ClubLayout breadcrumbs={breadcrumbs} club={club} actions={
+        <InvitationCreationForm club={club} />
+      }>
         <InvitationsTable invitations={invitations} />
       </ClubLayout>
     </>
