@@ -21,7 +21,7 @@ export default function InvitationsTable({ invitations }: { invitations: Invitat
 							<TableRow key={`${invitation.token}-${index}`}>
 								<TableCell className="font-medium">{invitation.email}</TableCell>
 								<TableCell>{invitation.accepted ? "ACCEPTED" : "SENT"}</TableCell>
-								<TableCell>{invitation.invited_by.username}</TableCell>
+								<TableCell>{invitation.invited_by.username}<span className="text-muted-foreground text-xs ms-1">({invitation.invited_by.email})</span></TableCell>
 								<TableCell>{invitation.token}</TableCell>
 							</TableRow>
 						))}
