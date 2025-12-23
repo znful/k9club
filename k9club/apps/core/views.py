@@ -68,12 +68,28 @@ def club_delete(request: HttpRequest, slug: str):
 @require_GET
 def club_invitations(request: HttpRequest, slug: str):
     club = Club.objects.get(slug=slug, members=request.user)
-    invitations = club.invitations.all()
+    invitations: list[Invitation] = club.invitations.select_related("invited_by").all()
+
+    json_invitations = [
+        {
+            "id": invitation.id,
+            "email": invitation.email,
+            "invited_by": {
+                "id": invitation.invited_by.id,
+                "username": invitation.invited_by.username,
+                "email": invitation.invited_by.email,
+            },
+            "created_at": invitation.created_at.isoformat(),
+            "is_active": invitation.is_active,
+            "token": invitation.token,
+        }
+        for invitation in invitations
+    ]
 
     return render(
         request=request,
         component="Clubs/Invitations",
-        props={"club": club, "invitations": invitations},
+        props={"club": club, "invitations": json_invitations},
     )
 
 
