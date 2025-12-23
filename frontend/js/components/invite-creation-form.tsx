@@ -44,8 +44,7 @@ export function InvitationCreationForm({ club, errors }: { club: Club, errors?: 
 						Invite a new staff member to the club.
 					</AlertDialogDescription>
 				</AlertDialogHeader>
-				<Form action="/invitations/create/" method="POST" className="grid gap-4" onSuccess={handleDialogClose}>
-					<input name="club" value={club.id} hidden />
+				<Form action={`clubs/${club.slug}/invitations/create/`} method="POST" className="grid gap-4" onSuccess={handleDialogClose}>
 					<div>
 						<div className="grid gap-3">
 							<Label htmlFor="email">Email</Label>

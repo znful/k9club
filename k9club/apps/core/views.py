@@ -10,7 +10,7 @@ from django.views.decorators.http import (require_GET, require_http_methods,
 from inertia import render
 
 from k9club.apps.core.forms import ClubForm, ClubUpdateForm
-from k9club.apps.core.models import Club
+from k9club.apps.core.models import Club, Invitation
 from k9club.utils.inertia_helpers import continue_or_redirect_with_errors
 
 
@@ -75,3 +75,19 @@ def club_invitations(request: HttpRequest, slug: str):
         component="Clubs/Invitations",
         props={"club": club, "invitations": invitations},
     )
+
+
+@login_required
+@require_GET
+def club_invitations_create(request: HttpRequest, slug: str):
+    club = Club.objects.get(slug=slug, members=request.user)
+    form = InvitationForm(json.loads(request.body))
+    _ = continue_or_redirect_with_errors(
+        form, redirect("clubs:invitations", slug=club.slug)
+    )
+
+    invitation: Invitation = form.save(commit=False)
+    invitation.invited_by = request.user
+    invitation.save()
+    messages.success(request, f"Successfully created invitation")
+    return render(request=request, component="Clubs/Invitations", props={"club": club})
