@@ -1,6 +1,9 @@
 import React from "react";
 import type { Invitation } from "@/types";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "./ui/table";
+import { Button } from "./ui/button";
+import { Trash } from "lucide-react";
+import { Link } from "@inertiajs/react";
 
 export default function InvitationsTable({ invitations }: { invitations: Invitation[] }) {
 	return (
@@ -14,6 +17,7 @@ export default function InvitationsTable({ invitations }: { invitations: Invitat
 							<TableHead>Status</TableHead>
 							<TableHead>Invited by</TableHead>
 							<TableHead>Token</TableHead>
+							<TableHead>Actions</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
@@ -23,6 +27,15 @@ export default function InvitationsTable({ invitations }: { invitations: Invitat
 								<TableCell>{invitation.accepted ? "ACCEPTED" : "SENT"}</TableCell>
 								<TableCell>{invitation.invited_by.username}<span className="text-muted-foreground text-xs ms-1">({invitation.invited_by.email})</span></TableCell>
 								<TableCell>{invitation.token}</TableCell>
+								<TableCell>
+									<div>
+										<Button variant="destructive" size="sm" disabled={invitation.accepted} title="Delete invitation" asChild>
+											<Link href={`/invitations/${invitation.id}/destroy/`} method="delete" preserveScroll>
+												<Trash />
+											</Link>
+										</Button>
+									</div>
+								</TableCell>
 							</TableRow>
 						))}
 					</TableBody>

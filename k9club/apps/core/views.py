@@ -56,7 +56,7 @@ def club_update(request: HttpRequest, slug: str):
 
 @login_required
 @require_http_methods(["DELETE"])
-def club_delete(request: HttpRequest, slug: str):
+def club_destroy(request: HttpRequest, slug: str):
     club = Club.objects.get(slug=slug, members=request.user)
     club.is_active = False
     club.deleted_at = datetime.now()
@@ -68,7 +68,11 @@ def club_delete(request: HttpRequest, slug: str):
 @require_GET
 def club_invitations(request: HttpRequest, slug: str):
     club = Club.objects.get(slug=slug, members=request.user)
-    invitations: list[Invitation] = club.invitations.select_related("invited_by").all()
+    invitations: list[Invitation] = (
+        club.invitations.select_related("invited_by")
+        .filter(is_active=True)
+        .order_by("-created_at")
+    )
 
     json_invitations = [
         {
@@ -107,4 +111,19 @@ def club_invitations_create(request: HttpRequest, slug: str):
     invitation.club = club
     invitation.save()
     messages.success(request, f"Successfully created invitation")
+    return redirect("clubs:invitations", slug=club.slug)
+
+
+def invitation_destroy(request: HttpRequest, id: int):
+    invitation = get_object_or_404(Invitation, id=id)
+    club = invitation.club
+
+    if not club.members.filter(id=request.user.pk).exists():
+        messages.error(request, "You do not have permission to delete this invitation")
+        return redirect("clubs:invitations", slug=club.slug)
+
+    invitation.is_active = False
+    invitation.deleted_at = datetime.now()
+    invitation.save()
+    messages.success(request, "Successfully deleted invitation")
     return redirect("clubs:invitations", slug=club.slug)
