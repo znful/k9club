@@ -27,7 +27,7 @@ export default function Invitations({ invitations, club, errors }: { invitations
   return (
     <>
       <ClubLayout breadcrumbs={breadcrumbs} club={club} actions={
-        <InvitationCreationForm club={club} />
+        <InvitationCreationForm club={club} errors={errors} />
       }>
         <InvitationsTable invitations={invitations} />
       </ClubLayout>
