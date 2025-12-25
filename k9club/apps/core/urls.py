@@ -1,6 +1,22 @@
-from django.urls import path
+from django.urls import include, path
 
 from . import views
+
+adherent_patterns = (
+    [
+        path("", views.club_adherents_index, name="adherents_index"),
+    ],
+    "adherents",
+)
+
+
+invitation_patterns = (
+    [
+        path("<int:id>/destroy/", views.invitation_destroy, name="destroy"),
+    ],
+    "invitations",
+)
+
 
 club_patterns = (
     [
@@ -15,13 +31,7 @@ club_patterns = (
             views.club_invitations_create,
             name="create_invitations",
         ),
+        path("<str:slug>/", include(adherent_patterns)),
     ],
     "clubs",
-)
-
-invitation_patterns = (
-    [
-        path("<int:id>/destroy/", views.invitation_destroy, name="destroy"),
-    ],
-    "invitations",
 )

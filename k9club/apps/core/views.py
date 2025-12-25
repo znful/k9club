@@ -10,7 +10,7 @@ from django.views.decorators.http import (require_GET, require_http_methods,
 from inertia import render
 
 from k9club.apps.core.forms import ClubForm, ClubUpdateForm, InvitationForm
-from k9club.apps.core.models import Club, Invitation
+from k9club.apps.core.models import Adherent, Club, Invitation
 from k9club.utils.inertia_helpers import continue_or_redirect_with_errors
 
 
@@ -127,3 +127,15 @@ def invitation_destroy(request: HttpRequest, id: int):
     invitation.save()
     messages.success(request, "Successfully deleted invitation")
     return redirect("clubs:invitations", slug=club.slug)
+
+
+@login_required
+@require_GET
+def club_adherents_index(request: HttpRequest, slug: str):
+    club = Club.objects.get(slug=slug, members=request.user)
+    adherents: list[Adherent] = club.adherents.all()
+    return render(
+        request=request,
+        component="Clubs/Adherents/Index",
+        props={"club": club, "adherents": adherents},
+    )
