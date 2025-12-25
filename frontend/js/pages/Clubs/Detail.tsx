@@ -1,5 +1,4 @@
 import React from "react";
-import Layout from "@/layouts/app-layout";
 import type { BreadcrumbItem, Club } from "@/types";
 import { Form, Link } from "@inertiajs/react";
 import { Label } from "@/components/ui/label";
@@ -24,15 +23,10 @@ export default function Detail({ club, errors }: { club: Club, errors?: Record<s
       href: `/clubs/${club.slug}/`
     }
   ]
-  const sidebarItems = [
-    {
-      title: "General",
-      href: `/clubs/${club.slug}/`
-    }
-  ]
+
   return (
     <>
-      <ClubLayout breadcrumbs={breadcrumbs} sidebarNavItems={sidebarItems}>
+      <ClubLayout breadcrumbs={breadcrumbs} club={club}>
         <div className="mt-4">
           <Form method="POST" action={`/clubs/${club.slug}/edit/`}>
             {({ processing }) => (
@@ -84,9 +78,11 @@ export default function Detail({ club, errors }: { club: Club, errors?: Record<s
             <div className="relative space-y-0.5 text-red-600 dark:text-red-100">
               <p className="font-medium">Warning</p><p className="text-sm">Please proceed with caution, this cannot be undone.</p>
             </div>
-            <Link href={`/clubs/${club.slug}/delete/`} method="delete" as={Button} variant="destructive">
-              Delete club
-            </Link>
+            <Button variant="destructive" title="Delete club" asChild>
+              <Link href={`/clubs/${club.slug}/destroy/`} method="delete">
+                Delete club
+              </Link>
+            </Button>
           </div>
         </div>
       </ClubLayout>

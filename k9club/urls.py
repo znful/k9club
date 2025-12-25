@@ -18,10 +18,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from k9club.apps.core.urls import club_patterns, invitation_patterns
+
 from . import views
 
 urlpatterns = [
     path("", views.home, name="home"),
     path("admin/", admin.site.urls),
-    path("clubs/", include("k9club.apps.core.urls")),
+    path("clubs/", include(club_patterns)),
+    path("invitations/", include(invitation_patterns)),
 ]

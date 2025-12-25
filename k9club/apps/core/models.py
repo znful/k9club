@@ -5,6 +5,7 @@ from django.contrib.auth.models import Permission
 from django.db import models
 
 from k9club.utils.slugs import generate_slug
+from k9club.utils.tokens import generate_token
 
 user_model = get_user_model()
 
@@ -99,7 +100,7 @@ class Invitation(BaseModelMixin):
     invited_by = models.ForeignKey(
         user_model, on_delete=models.CASCADE, related_name="sent_invitations"
     )
-    token = models.CharField(max_length=64, unique=True)
+    token = models.CharField(max_length=64, unique=True, default=generate_token)
     accepted = models.BooleanField(default=False)
 
     def __str__(self) -> str:

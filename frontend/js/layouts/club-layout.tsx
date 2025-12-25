@@ -1,5 +1,5 @@
 import React from "react";
-import type { BreadcrumbItem } from "@/types";
+import type { BreadcrumbItem, Club } from "@/types";
 import type { PropsWithChildren, ReactNode } from "react";
 import Layout from "./app-layout";
 import { Button } from "@/components/ui/button";
@@ -11,9 +11,20 @@ export default function ClubLayout({
 	children,
 	breadcrumbs,
 	actions,
-	sidebarNavItems
-}: PropsWithChildren<{ breadcrumbs?: BreadcrumbItem[], actions?: ReactNode, sidebarNavItems: { title: string, href: string }[] }>) {
+	club
+}: PropsWithChildren<{ breadcrumbs?: BreadcrumbItem[], actions?: ReactNode, club: Club }>) {
 	const currentPath = window.location.pathname;
+	const sidebarNavItems = [
+		{
+			title: "General",
+			href: `/clubs/${club.slug}/`
+		},
+		{
+			title: "Invitations",
+			href: `/clubs/${club.slug}/invitations/`
+		}
+
+	]
 	return (
 		<Layout breadcrumbs={breadcrumbs} actions={actions}>
 			<div className="flex flex-col lg:flex-row lg:space-x-12">
@@ -27,8 +38,8 @@ export default function ClubLayout({
 								asChild
 								className={cn('w-full justify-start', {
 									'bg-muted': isSameUrl(
-										currentPath,
 										item.href,
+										currentPath
 									),
 								})}
 							>
@@ -42,8 +53,8 @@ export default function ClubLayout({
 
 				<Separator className="my-6 lg:hidden" />
 
-				<div className="flex-1 md:max-w-2xl">
-					<section className="max-w-xl space-y-12">
+				<div className="flex-1 md:max-w-3xl">
+					<section className="space-y-12">
 						{children}
 					</section>
 				</div>
