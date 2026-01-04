@@ -44,7 +44,7 @@ export function AdherentCreationForm({ errors, club }: { errors?: Record<string,
 						Add a new adherent to your club here. Click save when you&apos;re done.
 					</AlertDialogDescription>
 				</AlertDialogHeader>
-				<Form action={`/clubs/${club.id}/adherents/create/`} method="POST" className="grid gap-4" onSuccess={handleDialogClose}>
+				<Form action={`/clubs/${club.slug}/adherents/create/`} method="POST" className="grid gap-4" onSuccess={handleDialogClose}>
 					<div>
 						<div className="grid gap-2">
 
