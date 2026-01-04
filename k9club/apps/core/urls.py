@@ -31,7 +31,7 @@ club_patterns = (
             views.club_invitations_create,
             name="create_invitations",
         ),
-        path("<str:slug>/", include(adherent_patterns)),
+        path("<str:slug>/adherents", include(adherent_patterns)),
     ],
     "clubs",
 )

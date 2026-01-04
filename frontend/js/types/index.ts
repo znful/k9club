@@ -17,6 +17,7 @@ export interface NavItem {
   icon?: LucideIcon | null;
   isActive?: boolean;
 }
+
 export interface SharedData {
   sidebarOpen: boolean;
   [key: string]: unknown;
@@ -28,6 +29,13 @@ interface BaseModel {
   created_at: Date;
   updated_at: Date;
   deleted_at: Date;
+}
+
+export interface Document extends BaseModel {
+  title: string;
+  file: string;
+  uploaded_by: User;
+  description?: string;
 }
 
 export interface User {
@@ -75,4 +83,15 @@ export interface Invitation extends BaseModel {
   invited_by: User;
   token: string;
   accepted: boolean;
+}
+
+export interface Adherent extends BaseModel {
+  first_name: string;
+  last_name: string;
+  email?: string;
+  phone_number?: string;
+  occupation?: string;
+  club: Club;
+  notes?: string;
+  documents?: Document[];
 }
