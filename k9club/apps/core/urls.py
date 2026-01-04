@@ -5,6 +5,7 @@ from . import views
 adherent_patterns = (
     [
         path("", views.club_adherents_index, name="adherents_index"),
+        path("create/", views.club_adherents_create, name="adherents_create"),
     ],
     "adherents",
 )
@@ -31,7 +32,7 @@ club_patterns = (
             views.club_invitations_create,
             name="create_invitations",
         ),
-        path("<str:slug>/adherents", include(adherent_patterns)),
+        path("<str:slug>/adherents/", include(adherent_patterns)),
     ],
     "clubs",
 )
