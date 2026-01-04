@@ -148,11 +148,11 @@ def club_adherents_create(request: HttpRequest, slug: str):
     club = Club.objects.get(slug=slug, members=request.user)
     form = AdherentForm(json.loads(request.body))
     _ = continue_or_redirect_with_errors(
-        form, redirect("clubs:adherents_index", slug=club.slug)
+        form, redirect("clubs:adherents:index", slug=club.slug)
     )
 
     adherent: Adherent = form.save(commit=False)
     adherent.club = club
     adherent.save()
     messages.success(request, "Successfully created adherent")
-    return redirect("clubs:adherents_index", slug=club.slug)
+    return redirect("clubs:adherents:index", slug=club.slug)
