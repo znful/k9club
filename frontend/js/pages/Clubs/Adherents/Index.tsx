@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "@/layouts/app-layout";
 import type { Adherent, BreadcrumbItem, Club } from "@/types";
 import AdherentsTable from "@/components/adherents-table";
+import { AdherentCreationForm } from "@/components/adherent-creation-form";
 
 interface Props {
   club: Club;
@@ -17,7 +18,9 @@ export default function Index({ club, adherents, errors }: Props) {
   ];
 
   return (
-    <Layout breadcrumbs={breadcrumbs} actions={<> </>}>
+    <Layout breadcrumbs={breadcrumbs} actions={<>
+      <AdherentCreationForm errors={errors} club={club} />
+    </>}>
       <AdherentsTable club={club} adherents={adherents} />
     </Layout>
   );
