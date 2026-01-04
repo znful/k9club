@@ -1,5 +1,5 @@
 import React from "react"
-import { Home, Warehouse } from "lucide-react"
+import { Home, Warehouse, User } from "lucide-react"
 
 import {
 	Sidebar,
@@ -23,8 +23,13 @@ const items: NavItem[] = [
 	},
 	{
 		title: "Clubs",
-		href: "/clubs",
+		href: "/clubs/",
 		icon: Warehouse
+	},
+	{
+		title: "Adherents",
+		href: "#",
+		icon: User
 	}
 ]
 
