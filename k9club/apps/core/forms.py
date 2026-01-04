@@ -1,6 +1,6 @@
 from django.forms import ModelForm
 
-from k9club.apps.core.models import Club, Invitation
+from k9club.apps.core.models import Adherent, Club, Invitation
 
 
 class ClubForm(ModelForm):
@@ -19,3 +19,9 @@ class InvitationForm(ModelForm):
     class Meta:
         model = Invitation
         fields = ["email"]
+
+
+class AdherentForm(ModelForm):
+    class Meta:
+        model = Adherent
+        fields = "__all__"

@@ -9,7 +9,8 @@ from django.views.decorators.http import (require_GET, require_http_methods,
                                           require_POST)
 from inertia import render
 
-from k9club.apps.core.forms import ClubForm, ClubUpdateForm, InvitationForm
+from k9club.apps.core.forms import (AdherentForm, ClubForm, ClubUpdateForm,
+                                    InvitationForm)
 from k9club.apps.core.models import Adherent, Club, Invitation
 from k9club.utils.inertia_helpers import continue_or_redirect_with_errors
 
@@ -139,3 +140,19 @@ def club_adherents_index(request: HttpRequest, slug: str):
         component="Clubs/Adherents/Index",
         props={"club": club, "adherents": adherents},
     )
+
+
+@login_required
+@require_POST
+def club_adherents_create(request: HttpRequest, slug: str):
+    club = Club.objects.get(slug=slug, members=request.user)
+    form = AdherentForm(json.loads(request.body))
+    _ = continue_or_redirect_with_errors(
+        form, redirect("clubs:adherents_index", slug=club.slug)
+    )
+
+    adherent: Adherent = form.save(commit=False)
+    adherent.club = club
+    adherent.save()
+    messages.success(request, "Successfully created adherent")
+    return redirect("clubs:adherents_index", slug=club.slug)
