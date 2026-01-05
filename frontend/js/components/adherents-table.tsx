@@ -18,19 +18,21 @@ export default function AdherentsTable({ adherents, club }: { adherents: Adheren
 							<TableHead>Email</TableHead>
 							<TableHead>Phone Number</TableHead>
 							<TableHead>Occupation</TableHead>
+							<TableHead>Actions</TableHead>
 						</TableRow>
 					</TableHeader>
 					<TableBody>
 						{adherents.map((adherent, index) => (
-							<TableRow key={`${adherent.first_name}-${index}`}>
+							<TableRow key={`${adherent.id}-${index}`}>
+								<TableCell className="font-medium">{adherent.first_name}</TableCell>
 								<TableCell className="font-medium">{adherent.last_name}</TableCell>
 								<TableCell>{adherent.email}</TableCell>
 								<TableCell>{adherent.phone_number}</TableCell>
 								<TableCell>{adherent.occupation}</TableCell>
 								<TableCell>
 									<div>
-										<Button variant="destructive" size="sm" title="View adherent" asChild>
-											<Link href={`/clubs/${club.id}/adherents/${adherent.id}`} prefetch>
+										<Button variant="default" size="sm" title="View adherent" asChild>
+											<Link href={`/clubs/${club.slug}/adherents/${adherent.id}`} prefetch>
 												<Eye />
 											</Link>
 										</Button>
@@ -42,7 +44,7 @@ export default function AdherentsTable({ adherents, club }: { adherents: Adheren
 				</Table>
 			)}
 			{adherents.length <= 0 && (
-				<p>No invites found </p>
+				<p>No adherents found </p>
 			)}
 		</>
 	)

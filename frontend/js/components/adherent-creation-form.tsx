@@ -45,6 +45,7 @@ export function AdherentCreationForm({ errors, club }: { errors?: Record<string,
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<Form action={`/clubs/${club.slug}/adherents/create/`} method="POST" className="grid gap-4" onSuccess={handleDialogClose}>
+					<Input id="club" name="club" value={club.id} hidden />
 					<div>
 						<div className="grid gap-2">
 
@@ -102,7 +103,7 @@ export function AdherentCreationForm({ errors, club }: { errors?: Record<string,
 						<AlertDialogCancel asChild>
 							<Button variant="outline">Cancel</Button>
 						</AlertDialogCancel>
-						<Button type="submit">Create club</Button>
+						<Button type="submit">Create Adherent</Button>
 					</AlertDialogFooter>
 				</Form>
 			</AlertDialogContent>
