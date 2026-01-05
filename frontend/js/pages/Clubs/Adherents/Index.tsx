@@ -13,8 +13,9 @@ interface Props {
 export default function Index({ club, adherents, errors }: Props) {
   const breadcrumbs: BreadcrumbItem[] = [
     { title: "Home", href: "/" },
-    { title: "Clubs", href: "/clubs" },
-    { title: "Adherents", href: `/clubs/${club.id}/adherents` },
+    { title: "Clubs", href: "/clubs/" },
+    { title: club.name, href: `/clubs/${club.slug}/` },
+    { title: "Adherents", href: `/clubs/${club.id}/adherents/` },
   ];
 
   return (

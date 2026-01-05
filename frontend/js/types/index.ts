@@ -26,9 +26,9 @@ export interface SharedData {
 interface BaseModel {
   id: number;
   is_active: boolean;
-  created_at: Date;
-  updated_at: Date;
-  deleted_at: Date;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string;
 }
 
 export interface Document extends BaseModel {

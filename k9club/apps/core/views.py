@@ -163,8 +163,27 @@ def club_adherents_create(request: HttpRequest, slug: str):
 def club_adherents_show(request: HttpRequest, slug: str, adherent_id: int):
     club: Club = Club.objects.get(slug=slug, members=request.user)
     adherent: Adherent = get_object_or_404(Adherent, id=adherent_id, club=club)
+    adherent_json = {
+        "id": adherent.pk,
+        "first_name": adherent.first_name,
+        "last_name": adherent.last_name,
+        "email": adherent.email,
+        "phone_number": adherent.phone_number,
+        "occupation": adherent.occupation,
+        "notes": adherent.notes,
+        "documents": [
+            {
+                "id": doc.id,
+                "name": doc.name,
+                "file_url": doc.file.url,
+            }
+            for doc in adherent.documents.all()
+        ],
+        "created_at": adherent.created_at.isoformat(),
+        "updated_at": adherent.updated_at.isoformat(),
+    }
     return render(
         request=request,
         component="Clubs/Adherents/Show",
-        props={"club": club, "adherent": adherent},
+        props={"club": club, "adherent": adherent_json},
     )

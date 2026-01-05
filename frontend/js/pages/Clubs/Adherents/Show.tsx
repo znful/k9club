@@ -1,6 +1,7 @@
+import React from "react";
 import Layout from "@/layouts/app-layout";
 import type { Adherent, BreadcrumbItem, Club } from "@/types";
-import React from "react";
+import AdherentHeader from "@/components/adherent-header";
 
 export default function Detail({ club, adherent, errors }: { club: Club, adherent: Adherent, errors?: Record<string, string> }) {
   const breadcrumbs: BreadcrumbItem[] = [
@@ -13,7 +14,7 @@ export default function Detail({ club, adherent, errors }: { club: Club, adheren
       href: "/clubs/"
     },
     {
-      title: club.slug,
+      title: club.name,
       href: `/clubs/${club.slug}/`
     },
     {
@@ -29,10 +30,7 @@ export default function Detail({ club, adherent, errors }: { club: Club, adheren
   return (
     <>
       <Layout breadcrumbs={breadcrumbs}>
-        <div className="mt-4">
-          <h1 className="text-2xl font-bold">{adherent.first_name} {adherent.last_name}</h1>
-          <p className="text-sm text-muted-foreground">Adherent details will be displayed here.</p>
-        </div>
+        <AdherentHeader adherent={adherent} errors={errors} />
       </Layout>
     </>
   )
