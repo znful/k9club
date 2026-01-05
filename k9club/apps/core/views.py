@@ -40,7 +40,7 @@ def club_create(request: HttpRequest):
 @require_GET
 def club_show(request: HttpRequest, slug: str):
     club: Club = Club.objects.get(slug=slug, members=request.user)
-    return render(request=request, component="Clubs/Detail", props={"club": club})
+    return render(request=request, component="Clubs/Show", props={"club": club})
 
 
 @login_required
@@ -156,3 +156,15 @@ def club_adherents_create(request: HttpRequest, slug: str):
     adherent.save()
     messages.success(request, "Successfully created adherent")
     return redirect("clubs:adherents:index", slug=club.slug)
+
+
+@login_required
+@require_GET
+def club_adherents_show(request: HttpRequest, slug: str, adherent_id: int):
+    club: Club = Club.objects.get(slug=slug, members=request.user)
+    adherent: Adherent = get_object_or_404(Adherent, id=adherent_id, club=club)
+    return render(
+        request=request,
+        component="Clubs/Adherents/Show",
+        props={"club": club, "adherent": adherent},
+    )
