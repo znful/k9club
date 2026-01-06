@@ -79,6 +79,10 @@ class Adherent(BaseModelMixin):
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
+    @property
+    def full_name(self) -> str:
+        return f"{self.first_name} {self.last_name}"
+
 
 class Dog(BaseModelMixin):
     name = models.CharField(max_length=100)

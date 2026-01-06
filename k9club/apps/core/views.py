@@ -187,3 +187,25 @@ def club_adherents_show(request: HttpRequest, slug: str, adherent_id: int):
         component="Clubs/Adherents/Show",
         props={"club": club, "adherent": adherent_json},
     )
+
+
+@login_required
+@require_POST
+def club_adherents_dog_create(request: HttpRequest, slug: str, adherent_id: int):
+    club: Club = Club.objects.get(slug=slug, members=request.user)
+    adherent: Adherent = get_object_or_404(Adherent, id=adherent_id, club=club)
+
+    form = DogForm(json.loads(request.body))
+    _ = continue_or_redirect_with_errors(
+        form, redirect("clubs:adherents:show", slug=club.slug, adherent_id=adherent.pk)
+    )
+
+    dog = form.save(commit=False)
+    dog.adherent = adherent
+    dog.save()
+
+    messages.success(
+        request,
+        f"Successfully created {dog.name} for {adherent.full_name}",
+    )
+    return redirect("clubs:adherents:show", slug=club.slug, adherent_id=adherent.pk)
