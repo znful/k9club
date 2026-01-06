@@ -2,15 +2,26 @@ from django.urls import include, path
 
 from . import views
 
+dog_patterns = (
+    [
+        path(
+            "create-simplified/",
+            views.club_adherents_dog_create,
+            name="create-simplified",
+        ),
+    ],
+    "dogs",
+)
+
 adherent_patterns = (
     [
         path("", views.club_adherents_index, name="index"),
         path("<int:adherent_id>/", views.club_adherents_show, name="show"),
+        path("<int:adherent_id>/dogs/", include(dog_patterns, namespace="dogs")),
         path("create/", views.club_adherents_create, name="create"),
     ],
     "adherents",
 )
-
 
 invitation_patterns = (
     [

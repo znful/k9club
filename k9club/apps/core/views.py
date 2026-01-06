@@ -9,8 +9,8 @@ from django.views.decorators.http import (require_GET, require_http_methods,
                                           require_POST)
 from inertia import render
 
-from k9club.apps.core.forms import (AdherentForm, ClubForm, ClubUpdateForm,
-                                    InvitationForm)
+from k9club.apps.core.forms import (AdherentDogForm, AdherentForm, ClubForm,
+                                    ClubUpdateForm, InvitationForm)
 from k9club.apps.core.models import Adherent, Club, Invitation
 from k9club.utils.inertia_helpers import continue_or_redirect_with_errors
 
@@ -195,12 +195,13 @@ def club_adherents_dog_create(request: HttpRequest, slug: str, adherent_id: int)
     club: Club = Club.objects.get(slug=slug, members=request.user)
     adherent: Adherent = get_object_or_404(Adherent, id=adherent_id, club=club)
 
-    form = DogForm(json.loads(request.body))
+    form = AdherentDogForm(json.loads(request.body))
     _ = continue_or_redirect_with_errors(
         form, redirect("clubs:adherents:show", slug=club.slug, adherent_id=adherent.pk)
     )
 
     dog = form.save(commit=False)
+    dog.owner = request.user
     dog.adherent = adherent
     dog.save()
 
