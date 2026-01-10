@@ -171,6 +171,15 @@ def club_adherents_show(request: HttpRequest, slug: str, adherent_id: int):
         "phone_number": adherent.phone_number,
         "occupation": adherent.occupation,
         "notes": adherent.notes,
+        "dogs": [
+            {
+                "id": dog.id,
+                "name": dog.name,
+                "breed": dog.breed,
+                "age": dog.age,
+            }
+            for dog in adherent.dogs.all()
+        ],
         "documents": [
             {
                 "id": doc.id,
