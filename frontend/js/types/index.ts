@@ -92,6 +92,17 @@ export interface Adherent extends BaseModel {
   phone_number?: string;
   occupation?: string;
   club: Club;
+  dogs: Dog[];
+  notes?: string;
+  documents?: Document[];
+}
+
+export interface Dog extends BaseModel {
+  name: string;
+  breed?: string;
+  age?: number;
+  chip_number?: string;
+  owner: Adherent;
   notes?: string;
   documents?: Document[];
 }

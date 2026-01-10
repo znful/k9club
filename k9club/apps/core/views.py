@@ -177,6 +177,8 @@ def club_adherents_show(request: HttpRequest, slug: str, adherent_id: int):
                 "name": dog.name,
                 "breed": dog.breed,
                 "age": dog.age,
+                "chip_number": dog.chip_number,
+                "created_at": dog.created_at.isoformat(),
             }
             for dog in adherent.dogs.all()
         ],
