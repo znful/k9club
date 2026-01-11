@@ -75,6 +75,7 @@ class Adherent(BaseModelMixin):
     club = models.ForeignKey(Club, on_delete=models.CASCADE, related_name="adherents")
     notes = models.TextField(blank=True, null=True)
     documents = models.ManyToManyField("Document", blank=True)
+    # dogs -> related name from Dog model
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
