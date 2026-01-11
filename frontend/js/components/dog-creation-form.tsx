@@ -34,7 +34,7 @@ export function DogCreationForm({ errors, club, adherent }: { errors?: Record<st
 			<AlertDialogTrigger asChild>
 				<Button variant="default">
 					<Plus />
-					Create Adherent
+					Create Dog
 				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent className="sm:max-w-[425px] ">
@@ -66,7 +66,7 @@ export function DogCreationForm({ errors, club, adherent }: { errors?: Record<st
 							</div>
 
 							<div>
-								<Label htmlFor="age">Email</Label>
+								<Label htmlFor="age">Age</Label>
 								<Input id="age" name="age" type="number" className={errors && errors.age ? "border-red-500" : ""} />
 								{errors && errors.age && (
 									<p className="text-red-500 text-sm mt-1">{errors.email}</p>

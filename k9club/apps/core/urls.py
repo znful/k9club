@@ -5,9 +5,9 @@ from . import views
 dog_patterns = (
     [
         path(
-            "create-simplified/",
+            "create/",
             views.club_adherents_dog_create,
-            name="create-simplified",
+            name="create",
         ),
     ],
     "dogs",

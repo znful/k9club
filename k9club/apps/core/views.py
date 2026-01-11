@@ -212,8 +212,7 @@ def club_adherents_dog_create(request: HttpRequest, slug: str, adherent_id: int)
     )
 
     dog = form.save(commit=False)
-    dog.owner = request.user
-    dog.adherent = adherent
+    dog.owner = adherent
     dog.save()
 
     messages.success(
