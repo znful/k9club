@@ -1,9 +1,9 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/custom-tabs';
-import type { Adherent } from '@/types';
+import type { Adherent, Club } from '@/types';
 import React from 'react';
 import DogsTable from './dogs-table';
 
-export default function AdherentDetails({ adherent }: { adherent: Adherent }) {
+export default function AdherentDetails({ adherent, club }: { adherent: Adherent, club: Club }) {
 	return (
 		<>
 			<div className='w-full mt-4'>
@@ -13,7 +13,7 @@ export default function AdherentDetails({ adherent }: { adherent: Adherent }) {
 						<TabsTrigger value='misc'>Misc</TabsTrigger>
 					</TabsList>
 					<TabsContent value='dogs'>
-						<DogsTable dogs={adherent.dogs} />
+						<DogsTable dogs={adherent.dogs} club={club} />
 					</TabsContent>
 					<TabsContent value='misc'>
 						<p>Miscellaneous information...</p>

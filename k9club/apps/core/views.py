@@ -3,6 +3,7 @@ from datetime import datetime
 
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import QuerySet
 from django.http import HttpRequest
 from django.shortcuts import get_object_or_404, redirect
 from django.views.decorators.http import (require_GET, require_http_methods,
@@ -11,7 +12,7 @@ from inertia import render
 
 from k9club.apps.core.forms import (AdherentDogForm, AdherentForm, ClubForm,
                                     ClubUpdateForm, InvitationForm)
-from k9club.apps.core.models import Adherent, Club, Invitation
+from k9club.apps.core.models import Adherent, Club, Dog, Invitation
 from k9club.utils.inertia_helpers import continue_or_redirect_with_errors
 
 
@@ -220,3 +221,36 @@ def club_adherents_dog_create(request: HttpRequest, slug: str, adherent_id: int)
         f"Successfully created {dog.name} for {adherent.full_name}",
     )
     return redirect("clubs:adherents:show", slug=club.slug, adherent_id=adherent.pk)
+
+
+@login_required
+@require_GET
+def club_dogs_index(request: HttpRequest, slug: str):
+    club: Club = get_object_or_404(Club, slug=slug, members=request.user)
+    dogs: QuerySet[Dog, Dog] = Dog.objects.filter(owner__club=club).select_related(
+        "owner"
+    )
+
+    dogs_json = [
+        {
+            "id": dog.pk,
+            "name": dog.name,
+            "breed": dog.breed,
+            "age": dog.age,
+            "chip_number": dog.chip_number,
+            "date_of_birth": dog.date_of_birth,
+            "owner": {
+                "id": dog.owner.id,
+                "first_name": dog.owner.first_name,
+                "last_name": dog.owner.last_name,
+            },
+            "created_at": dog.created_at.isoformat(),
+        }
+        for dog in dogs
+    ]
+
+    return render(
+        request=request,
+        component="Clubs/Dogs/Index",
+        props={"club": club, "dogs": dogs_json},
+    )

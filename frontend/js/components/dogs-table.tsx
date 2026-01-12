@@ -1,8 +1,11 @@
 import React from "react";
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import type { Dog } from "@/types";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import type { Club, Dog } from "@/types";
+import { Link } from "@inertiajs/react";
+import { Button } from "./ui/button";
+import { Eye } from "lucide-react";
 
-export default function DogsTable({ dogs }: { dogs: Array<Dog> }) {
+export default function DogsTable({ dogs, club }: { dogs: Array<Dog>, club: Club }) {
 	return (
 		<>
 			<Table>
@@ -23,8 +26,11 @@ export default function DogsTable({ dogs }: { dogs: Array<Dog> }) {
 							<TableCell>{dog.age}</TableCell>
 							<TableCell>{dog.chip_number}</TableCell>
 							<TableCell>
-								{/* Actions can be added here in the future */}
-								<p>View | Edit | Delete</p>
+								<Link href={`/clubs/${club.slug}/dogs/${dog.id}`} prefetch>
+									<Button variant="default" size="sm">
+										<Eye />
+									</Button>
+								</Link>
 							</TableCell>
 						</TableRow>
 					))}

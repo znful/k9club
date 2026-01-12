@@ -37,7 +37,7 @@ export default function Detail({ club, adherent, errors }: { club: Club, adheren
         </>
       }>
         <AdherentHeader adherent={adherent} errors={errors} />
-        <AdherentDetails adherent={adherent} />
+        <AdherentDetails adherent={adherent} club={club} />
       </Layout>
     </>
   )

@@ -4,20 +4,26 @@ from . import views
 
 dog_patterns = (
     [
-        path(
-            "create/",
-            views.club_adherents_dog_create,
-            name="create",
-        ),
+        path("", views.club_dogs_index, name="index"),
     ],
     "dogs",
+)
+
+adherent_dog_patterns = (
+    [
+        path("create/", views.club_adherents_dog_create, name="create"),
+    ],
+    "adherent-dogs",
 )
 
 adherent_patterns = (
     [
         path("", views.club_adherents_index, name="index"),
         path("<int:adherent_id>/", views.club_adherents_show, name="show"),
-        path("<int:adherent_id>/dogs/", include(dog_patterns, namespace="dogs")),
+        path(
+            "<int:adherent_id>/dogs/",
+            include(adherent_dog_patterns, namespace="adherent-dogs"),
+        ),
         path("create/", views.club_adherents_create, name="create"),
     ],
     "adherents",
@@ -47,6 +53,7 @@ club_patterns = (
         path(
             "<str:slug>/adherents/", include(adherent_patterns, namespace="adherents")
         ),
+        path("<str:slug>/dogs/", include(dog_patterns, namespace="dogs")),
     ],
     "clubs",
 )
