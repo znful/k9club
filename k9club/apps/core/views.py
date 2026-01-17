@@ -254,3 +254,40 @@ def club_dogs_index(request: HttpRequest, slug: str):
         component="Clubs/Dogs/Index",
         props={"club": club, "dogs": dogs_json},
     )
+
+
+@login_required
+@require_GET
+def club_dogs_show(request: HttpRequest, slug: str, dog_id: int):
+    club: Club = get_object_or_404(Club, slug=slug, members=request.user)
+    dog: Dog = get_object_or_404(Dog, id=dog_id, owner__club=club)
+
+    dog_json = {
+        "id": dog.pk,
+        "name": dog.name,
+        "breed": dog.breed,
+        "age": dog.age,
+        "chip_number": dog.chip_number,
+        "date_of_birth": dog.date_of_birth,
+        "owner": {
+            "id": dog.owner.id,
+            "first_name": dog.owner.first_name,
+            "last_name": dog.owner.last_name,
+        },
+        "notes": dog.notes,
+        "documents": [
+            {
+                "id": doc.id,
+                "name": doc.name,
+                "file_url": doc.file.url,
+            }
+            for doc in dog.documents.all()
+        ],
+        "created_at": dog.created_at.isoformat(),
+    }
+
+    return render(
+        request=request,
+        component="Clubs/Dogs/Show",
+        props={"club": club, "dog": dog_json},
+    )

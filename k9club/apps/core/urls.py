@@ -5,6 +5,7 @@ from . import views
 dog_patterns = (
     [
         path("", views.club_dogs_index, name="index"),
+        path("<int:dog_id>/", views.club_dogs_show, name="show"),
     ],
     "dogs",
 )
