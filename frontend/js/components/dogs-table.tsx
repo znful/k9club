@@ -5,13 +5,14 @@ import { Link } from "@inertiajs/react";
 import { Button } from "./ui/button";
 import { Eye } from "lucide-react";
 
-export default function DogsTable({ dogs, club }: { dogs: Array<Dog>, club: Club }) {
+export default function DogsTable({ dogs, club, showOwner = false }: { dogs: Array<Dog>, club: Club, showOwner?: boolean }) {
 	return (
 		<>
 			<Table>
 				<TableHeader>
 					<TableRow>
 						<TableHead>Name</TableHead>
+						{showOwner && (<TableHead>Owner</TableHead>)}
 						<TableHead>Breed</TableHead>
 						<TableHead>Age</TableHead>
 						<TableHead>Chip Number</TableHead>
@@ -22,6 +23,7 @@ export default function DogsTable({ dogs, club }: { dogs: Array<Dog>, club: Club
 					{dogs.map((dog, index) => (
 						<TableRow key={`${dog.id}-${index}`}>
 							<TableCell className="font-medium">{dog.name}</TableCell>
+							{showOwner && (<TableCell>{dog.owner.first_name + " " + dog.owner.last_name}</TableCell>)}
 							<TableCell>{dog.breed}</TableCell>
 							<TableCell>{dog.age}</TableCell>
 							<TableCell>{dog.chip_number}</TableCell>
