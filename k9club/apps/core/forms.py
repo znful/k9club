@@ -33,3 +33,9 @@ class AdherentDogForm(ModelForm):
     class Meta:
         model = Dog
         fields = ["name", "breed", "age"]
+
+
+class DogForm(ModelForm):
+    class Meta:
+        model = Dog
+        fields = "__all__"

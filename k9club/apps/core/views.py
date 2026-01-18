@@ -11,7 +11,7 @@ from django.views.decorators.http import (require_GET, require_http_methods,
 from inertia import render
 
 from k9club.apps.core.forms import (AdherentDogForm, AdherentForm, ClubForm,
-                                    ClubUpdateForm, InvitationForm)
+                                    ClubUpdateForm, DogForm, InvitationForm)
 from k9club.apps.core.models import Adherent, Club, Dog, Invitation
 from k9club.utils.inertia_helpers import continue_or_redirect_with_errors
 
@@ -300,3 +300,26 @@ def club_dogs_show(request: HttpRequest, slug: str, dog_id: int):
         component="Clubs/Dogs/Show",
         props={"club": club, "dog": dog_json},
     )
+
+
+@login_required
+@require_POST
+def club_dogs_create(request: HttpRequest, slug: str):
+    club: Club = get_object_or_404(Club, slug=slug, members=request.user)
+
+    form = DogForm(json.loads(request.body))
+    _ = continue_or_redirect_with_errors(
+        form, redirect("clubs:dogs:index", slug=club.slug)
+    )
+
+    dog = form.save(commit=False)
+    adherent_id = form.cleaned_data["owner"].id
+    adherent = get_object_or_404(Adherent, id=adherent_id, club=club)
+    dog.owner = adherent
+    dog.save()
+
+    messages.success(
+        request,
+        f"Successfully created {dog.name} for {adherent.full_name}",
+    )
+    return redirect("clubs:dogs:index", slug=club.slug)

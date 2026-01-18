@@ -4,7 +4,7 @@ import Layout from '@/layouts/app-layout';
 import type { Adherent, Club, Dog } from '@/types';
 import React from 'react'
 
-export default function Index({ club, dogs, adherents }: { club: Club, dogs: Array<Dog>, adherents: Array<Adherent> }) {
+export default function Index({ club, dogs, adherents, errors }: { club: Club, dogs: Array<Dog>, adherents: Array<Adherent>, errors?: Record<string, string> }) {
   const breadcrumbs = [
     {
       title: "Home",
@@ -24,7 +24,7 @@ export default function Index({ club, dogs, adherents }: { club: Club, dogs: Arr
     <>
       <Layout breadcrumbs={breadcrumbs} actions={
         <>
-          <DogCreationForm club={club} adherents={adherents} />
+          <DogCreationForm club={club} adherents={adherents} errors={errors} />
         </>
       }>
         <DogsTable dogs={dogs} club={club} showOwner />
