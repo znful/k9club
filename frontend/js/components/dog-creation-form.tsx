@@ -16,6 +16,7 @@ import { Form } from "@inertiajs/react"
 import { Plus } from "lucide-react"
 import type { Adherent, Club } from "@/types"
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "./ui/select"
+import { Textarea } from "./ui/textarea"
 
 export function DogCreationForm({ errors, club, adherents }: { errors?: Record<string, string>, club: Club, adherents: Array<Adherent> }) {
 	const [open, setOpen] = useState(false)
@@ -37,7 +38,7 @@ export function DogCreationForm({ errors, club, adherents }: { errors?: Record<s
 					Create Dog
 				</Button>
 			</AlertDialogTrigger>
-			<AlertDialogContent className="sm:max-w-[425px] ">
+			<AlertDialogContent className="sm:max-w-150">
 				<AlertDialogHeader>
 					<AlertDialogTitle>Create Adherent</AlertDialogTitle>
 					<AlertDialogDescription>
@@ -88,11 +89,35 @@ export function DogCreationForm({ errors, club, adherents }: { errors?: Record<s
 
 							<div>
 								<Label htmlFor="age">Age</Label>
-								<Input id="age" name="age" type="number" className={errors && errors.age ? "border-red-500" : ""} />
+								<Input id="age" name="age" type="number" min={0} className={errors && errors.age ? "border-red-500" : ""} />
 								{errors && errors.age && (
+									<p className="text-red-500 text-sm mt-1">{errors.age}</p>
+								)}
+							</div>
+
+							<div>
+								<Label htmlFor="date_of_birth">Date of birth</Label>
+								<Input id="date_of_birth" name="date_of_birth" type="date" className={errors && errors.date_of_birth ? "border-red-500" : ""} />
+								{errors && errors.date_of_birth && (
+									<p className="text-red-500 text-sm mt-1">{errors.date_of_birth}</p>
+								)}
+							</div>
+
+							<div>
+								<Label htmlFor="chip_number">Chip number</Label>
+								<Input id="chip_number" name="chip_number" type="text" className={errors && errors.chip_number ? "border-red-500" : ""} />
+								{errors && errors.chip_number && (
+									<p className="text-red-500 text-sm mt-1">{errors.chip_number}</p>
+								)}
+							</div>
+							<div>
+								<Label htmlFor="notes">Notes</Label>
+								<Textarea id="notes" name="notes" rows={5} className={errors && errors.notes ? "border-red-500" : ""} />
+								{errors && errors.notes && (
 									<p className="text-red-500 text-sm mt-1">{errors.email}</p>
 								)}
 							</div>
+
 						</div>
 					</div>
 					<AlertDialogFooter>
