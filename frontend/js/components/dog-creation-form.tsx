@@ -51,7 +51,7 @@ export function DogCreationForm({ errors, club, adherents }: { errors?: Record<s
 							<div>
 								<Label htmlFor="owner">Name</Label>
 								<Select name="owner">
-									<SelectTrigger>
+									<SelectTrigger className={errors && errors.owner ? "border-red-500" : ""}>
 										<SelectValue placeholder="Select owner" />
 									</SelectTrigger>
 									<SelectContent>
