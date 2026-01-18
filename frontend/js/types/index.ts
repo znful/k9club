@@ -67,7 +67,8 @@ export interface Club extends BaseModel {
   description: string;
   owner: User;
   members: User[];
-  invitattions: Invitation[];
+  invitations: Invitation[];
+  adherents: Adherent[];
 }
 
 export interface ClubUser extends BaseModel {

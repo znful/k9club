@@ -3,7 +3,7 @@ import Layout from "@/layouts/app-layout";
 import type { Adherent, BreadcrumbItem, Club } from "@/types";
 import AdherentHeader from "@/components/adherent-header";
 import AdherentDetails from "@/components/adherent-details";
-import { DogCreationForm } from "@/components/dog-creation-form";
+import { AdherentDogCreationForm } from "@/components/adherent-dog-creation-form";
 
 export default function Detail({ club, adherent, errors }: { club: Club, adherent: Adherent, errors?: Record<string, string> }) {
   const breadcrumbs: BreadcrumbItem[] = [
@@ -33,7 +33,7 @@ export default function Detail({ club, adherent, errors }: { club: Club, adheren
     <>
       <Layout breadcrumbs={breadcrumbs} actions={
         <>
-          <DogCreationForm errors={errors} club={club} adherent={adherent} />
+          <AdherentDogCreationForm errors={errors} club={club} adherent={adherent} />
         </>
       }>
         <AdherentHeader adherent={adherent} errors={errors} />

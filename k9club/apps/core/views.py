@@ -231,6 +231,15 @@ def club_dogs_index(request: HttpRequest, slug: str):
         "owner"
     )
 
+    adherents_json = [
+        {
+            "id": adherent.pk,
+            "first_name": adherent.first_name,
+            "last_name": adherent.last_name,
+        }
+        for adherent in club.adherents.all()
+    ]
+
     dogs_json = [
         {
             "id": dog.pk,
@@ -252,7 +261,7 @@ def club_dogs_index(request: HttpRequest, slug: str):
     return render(
         request=request,
         component="Clubs/Dogs/Index",
-        props={"club": club, "dogs": dogs_json},
+        props={"club": club, "dogs": dogs_json, "adherents": adherents_json},
     )
 
 

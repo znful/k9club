@@ -1,9 +1,10 @@
+import { DogCreationForm } from '@/components/dog-creation-form';
 import DogsTable from '@/components/dogs-table';
 import Layout from '@/layouts/app-layout';
-import type { Club, Dog } from '@/types';
+import type { Adherent, Club, Dog } from '@/types';
 import React from 'react'
 
-export default function Index({ club, dogs }: { club: Club, dogs: Array<Dog> }) {
+export default function Index({ club, dogs, adherents }: { club: Club, dogs: Array<Dog>, adherents: Array<Adherent> }) {
   const breadcrumbs = [
     {
       title: "Home",
@@ -21,7 +22,11 @@ export default function Index({ club, dogs }: { club: Club, dogs: Array<Dog> }) 
 
   return (
     <>
-      <Layout breadcrumbs={breadcrumbs}>
+      <Layout breadcrumbs={breadcrumbs} actions={
+        <>
+          <DogCreationForm club={club} adherents={adherents} />
+        </>
+      }>
         <DogsTable dogs={dogs} club={club} showOwner />
       </Layout>
     </>

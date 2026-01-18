@@ -15,9 +15,8 @@ import { Label } from "@/components/ui/label"
 import { Form } from "@inertiajs/react"
 import { Plus } from "lucide-react"
 import type { Adherent, Club } from "@/types"
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "./ui/select"
 
-export function DogCreationForm({ errors, club, adherents }: { errors?: Record<string, string>, club: Club, adherents: Array<Adherent> }) {
+export function AdherentDogCreationForm({ errors, club, adherent }: { errors?: Record<string, string>, club: Club, adherent: Adherent }) {
 	const [open, setOpen] = useState(false)
 
 	useEffect(() => {
@@ -44,31 +43,10 @@ export function DogCreationForm({ errors, club, adherents }: { errors?: Record<s
 						Add a new adherent to your club here. Click save when you&apos;re done.
 					</AlertDialogDescription>
 				</AlertDialogHeader>
-				<Form action={`/clubs/${club.slug}/dogs/create/`} method="POST" className="grid gap-4" onSuccess={handleDialogClose}>
+				<Form action={`/clubs/${club.slug}/adherents/${adherent.id}/dogs/create/`} method="POST" className="grid gap-4" onSuccess={handleDialogClose}>
 					<Input id="club" name="club" value={club.id} hidden />
 					<div>
 						<div className="grid gap-2">
-							<div>
-								<Label htmlFor="owner">Name</Label>
-								<Select name="owner">
-									<SelectTrigger>
-										<SelectValue placeholder="Select owner" />
-									</SelectTrigger>
-									<SelectContent>
-										<SelectGroup>
-											<SelectLabel>Adherents</SelectLabel>
-											{adherents.map((adherent) => (
-												<SelectItem key={adherent.id} value={adherent.id.toString()}>
-													{adherent.first_name} {adherent.last_name}
-												</SelectItem>
-											))}
-										</SelectGroup>
-									</SelectContent>
-								</Select>
-								{errors && errors.name && (
-									<p className="text-red-500 text-sm mt-1">{errors.name}</p>
-								)}
-							</div>
 
 							<div>
 								<Label htmlFor="first_name">Name</Label>
