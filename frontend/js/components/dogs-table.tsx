@@ -4,6 +4,7 @@ import type { Club, Dog } from "@/types";
 import { Link } from "@inertiajs/react";
 import { Button } from "./ui/button";
 import { Eye } from "lucide-react";
+import { DogDeleteModal } from "./dog-delete-modal";
 
 export default function DogsTable({ dogs, club, showOwner = false }: { dogs: Array<Dog>, club: Club, showOwner?: boolean }) {
 	return (
@@ -33,6 +34,7 @@ export default function DogsTable({ dogs, club, showOwner = false }: { dogs: Arr
 										<Eye />
 									</Button>
 								</Link>
+								<DogDeleteModal club={club} dog={dog} />
 							</TableCell>
 						</TableRow>
 					))}
