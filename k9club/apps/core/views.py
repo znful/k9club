@@ -333,3 +333,27 @@ def club_dogs_create(request: HttpRequest, slug: str):
         f"Successfully created {dog.name} for {adherent.full_name}",
     )
     return redirect("clubs:dogs:index", slug=club.slug)
+
+
+@login_required
+@require_http_methods(["PATCH"])
+def club_dogs_update(request: HttpRequest, slug: str, dog_id: int):
+    club: Club = get_object_or_404(Club, slug=slug, members=request.user)
+    dog: Dog = get_object_or_404(Dog, id=dog_id, owner__club=club)
+
+    form = DogForm(json.loads(request.body), instance=dog)
+    _ = continue_or_redirect_with_errors(
+        form, redirect("clubs:dogs:show", slug=club.slug, dog_id=dog.pk)
+    )
+
+    dog = form.save(commit=False)
+    adherent_id = form.cleaned_data["owner"].id
+    adherent = get_object_or_404(Adherent, id=adherent_id, club=club)
+    dog.owner = adherent
+    dog.save()
+
+    messages.success(
+        request,
+        f"Successfully updated {dog.name} for {adherent.full_name}",
+    )
+    return redirect("clubs:dogs:show", slug=club.slug, dog_id=dog.pk)

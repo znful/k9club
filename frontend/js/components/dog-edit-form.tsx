@@ -35,8 +35,8 @@ export function DogEditForm({ errors, club, adherents, dog }: { errors?: Record<
 						Edit the dog details here. Click save when you&apos;re done.
 					</AlertDialogDescription>
 				</AlertDialogHeader>
-				<Form action={`/clubs/${club.slug}/dogs/${dog.id}/update/`} method="POST" className="grid gap-4" onSuccess={handleDialogClose}>
-					<Input id="club" name="club" value={club.id} hidden />
+				<Form action={`/clubs/${club.slug}/dogs/${dog.id}/update/`} method="patch" className="grid gap-4" onSuccess={handleDialogClose}>
+					<Input id="club" name="club" value={club.id} hidden readOnly />
 					<div>
 						<div className="grid gap-2">
 							<div>
