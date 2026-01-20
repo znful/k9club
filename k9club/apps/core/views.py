@@ -270,6 +270,7 @@ def club_dogs_index(request: HttpRequest, slug: str):
 def club_dogs_show(request: HttpRequest, slug: str, dog_id: int):
     club: Club = get_object_or_404(Club, slug=slug, members=request.user)
     dog: Dog = get_object_or_404(Dog, id=dog_id, owner__club=club)
+    adherents: QuerySet[Adherent, Adherent] = club.adherents.all()
 
     dog_json = {
         "id": dog.pk,
@@ -295,10 +296,19 @@ def club_dogs_show(request: HttpRequest, slug: str, dog_id: int):
         "created_at": dog.created_at.isoformat(),
     }
 
+    adherents_json = [
+        {
+            "id": adherent.pk,
+            "first_name": adherent.first_name,
+            "last_name": adherent.last_name,
+        }
+        for adherent in adherents
+    ]
+
     return render(
         request=request,
         component="Clubs/Dogs/Show",
-        props={"club": club, "dog": dog_json},
+        props={"club": club, "dog": dog_json, "adherents": adherents_json},
     )
 
 

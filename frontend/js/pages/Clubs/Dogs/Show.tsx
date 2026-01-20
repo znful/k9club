@@ -1,8 +1,9 @@
+import { DogEditForm } from '@/components/dog-edit-form';
 import Layout from '@/layouts/app-layout';
-import type { Club, Dog } from '@/types';
+import type { Adherent, Club, Dog } from '@/types';
 import React from 'react';
 
-export default function Detail({ club, dog, errors }: { club: Club, dog: Dog, errors?: Record<string, string> }) {
+export default function Detail({ club, dog, adherents, errors }: { club: Club, dog: Dog, adherents: Array<Adherent>, errors?: Record<string, string> }) {
   const breadcrumbs = [
     {
       title: "Home",
@@ -24,7 +25,11 @@ export default function Detail({ club, dog, errors }: { club: Club, dog: Dog, er
 
   return (
     <>
-      <Layout breadcrumbs={breadcrumbs}>
+      <Layout breadcrumbs={breadcrumbs} actions={
+        <>
+          <DogEditForm errors={errors} club={club} dog={dog} adherents={adherents} />
+        </>
+      }>
         <h1 className="text-2xl font-bold mb-4">{dog.name}</h1>
         <div className="bg-white shadow overflow-hidden sm:rounded-lg">
           <div className="px-4 py-5 sm:px-6">
