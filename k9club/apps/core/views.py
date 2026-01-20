@@ -357,3 +357,19 @@ def club_dogs_update(request: HttpRequest, slug: str, dog_id: int):
         f"Successfully updated {dog.name} for {adherent.full_name}",
     )
     return redirect("clubs:dogs:show", slug=club.slug, dog_id=dog.pk)
+
+
+@login_required
+@require_http_methods(["DELETE"])
+def club_dogs_destroy(request: HttpRequest, slug: str, dog_id: int):
+    club: Club = get_object_or_404(Club, slug=slug, members=request.user)
+    dog: Dog = get_object_or_404(Dog, id=dog_id, owner__club=club)
+
+    dog.is_active = False
+    dog.save()
+
+    messages.success(
+        request,
+        f"Successfully deleted {dog.name}",
+    )
+    return redirect("clubs:dogs:index", slug=club.slug)

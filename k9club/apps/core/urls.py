@@ -8,6 +8,7 @@ dog_patterns = (
         path("<int:dog_id>/", views.club_dogs_show, name="show"),
         path("create/", views.club_dogs_create, name="create"),
         path("<int:dog_id>/update/", views.club_dogs_update, name="update"),
+        path("<int:dog_id>/destroy/", views.club_dogs_destroy, name="destroy"),
     ],
     "dogs",
 )
