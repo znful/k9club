@@ -35,7 +35,7 @@
     "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@eslint/js": "^9.39.2",
+    "@eslint/js": "^10.0.1",
     "@tailwindcss/vite": "^4.0.0",
     "@types/node": "^25.0.10",
     "@vitejs/plugin-react": "^5.1.2",
